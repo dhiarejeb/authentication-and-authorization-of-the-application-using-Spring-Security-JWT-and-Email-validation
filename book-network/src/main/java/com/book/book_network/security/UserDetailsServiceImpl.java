@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository repository;
     @Override
-    @Transactional
+    @Transactional //load the user and role and the authorities with it
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         return repository.findByEmail(userEmail)
                 .orElseThrow(()->new UsernameNotFoundException("user not found"));

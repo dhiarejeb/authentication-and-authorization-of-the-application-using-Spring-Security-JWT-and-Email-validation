@@ -29,7 +29,7 @@ public class JwtService { //this jwtservice is the service that will create upda
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
     }
-
+// for general extract reasons
     private <T> T extractClaim(String token, Function<Claims,T> claimResolver) {
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
@@ -51,7 +51,7 @@ public class JwtService { //this jwtservice is the service that will create upda
     }
 
     public String generateToken(Map<String,Object> claims , UserDetails userDetails) {
-
+        //if you want to build with userdetails only  or with userdetails and extra information claims
         return buildToken(claims,userDetails,jwtExpiration);
 
     }

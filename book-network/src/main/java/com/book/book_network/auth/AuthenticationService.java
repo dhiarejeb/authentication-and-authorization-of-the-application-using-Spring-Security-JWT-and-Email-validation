@@ -43,15 +43,15 @@ public class AuthenticationService {
 
 
     public void register(RegistrationRequest request) throws MessagingException {
-        //assign default role user create user object save it send validation email
+        //assign default role to user  2) create user object 3) save it 4) send validation email
         var userRole = roleRepository.findByName("USER")
-                //to do better exception handling
+                // to do better exception handling
                 .orElseThrow(() -> new IllegalStateException("ROLE USER was not initialized"));
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(passwordEncoder.encode(request.getPassword())) //spring va comparer hashcode bycrypt
                 .accountLocked(false)
                 .enabled(false)
                 .roles(List.of(userRole))
@@ -108,7 +108,7 @@ public class AuthenticationService {
 
     }
 
-    public AuthenticationResponse authenticate(@Valid AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(@Valid AuthenticationRequest request) { //trod Token
         var auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
